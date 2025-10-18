@@ -24,18 +24,16 @@ public class Lab07_BFDH {
             MyBox curbox = data.get(i);
             for(int j=0;j<levelW.size();j++){
                 if(levelW.get(j) + curbox.L <= x && curbox.H <= levelH.get(j)){
-                    System.err.println(i + " " + j);
+                    System.err.println("add " + i + "th box to level " + j );
                     levelW.set(j, levelW.get(j)+ curbox.L);
                     used.add(i);
                     break;
                 }
             }
-            if(!used.contains(i)){
-                System.out.println(sumH(levelH) +" "+curbox.H );
-            }
             if(!used.contains(i) && curbox.H + sumH(levelH) <= y){
                 levelW.add(curbox.L);
                 levelH.add(curbox.H);
+                System.out.println("create new level " + i + " th box with height " + curbox.H + " total height " + sumH(levelH));
                 used.add(i);
             }
         }
@@ -50,6 +48,7 @@ public class Lab07_BFDH {
         SortContext<MyBox> sorter = new SortContext<>(new boxSort<>());
         sorter.executeSort(data);
         //L is first column H is Second Column
+        System.out.println("All box after sort");
         for(int i=0;i<data.size();i++){
             System.out.println(i+": " + data.get(i).L + " " + data.get(i).H);
         }

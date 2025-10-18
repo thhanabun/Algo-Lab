@@ -8,57 +8,30 @@ import th.ac.kmutt.cpe.algorithm.thanaboon.sorting.boxSort;
 
 public class Lab07_Skyline {
     public static void SkylineSolve(ArrayList<MyBox> data,ArrayList<Integer> used  , double x ,double y){
-        
-        int[] skylines = new int[Math.floor(x)];
+        int floored = (int) Math.ceil(x);
+        double[] skylines = new double[floored];
         for(int i=0 ; i < data.size(); i++){
-            for (MyBox skyline : skylines) {
-                    if( data.get(i).L + skyline.L <= x && data.get(i).H + skyline.H <= y){
-                        used.add(i);
-                        skylines.add(new MyBox(skyline.L + data.get(i).L, skyline.H));
-                        skylines.add(new MyBox(skyline.L, skyline.H + data.get(i).H));
-                        skylines.remove(skyline);
-                        updateSkylines(skylines);
-                        break;
+            MyBox box = data.get(i);
+            int boxL = (int) Math.ceil(box.L);
+            int boxH = (int) Math.ceil(box.H);
+            for (int j=0; j < floored - boxL ; j++) {
+                double maxHeight = 0;
+                for (int k = j; k < j + boxL; k++) {
+                    if (skylines[k] > maxHeight) {
+                        maxHeight = skylines[k];
                     }
+                }
+                if (maxHeight + boxH <= y) {
+                    used.add(i);
+                    for (int k = j; k < j + boxL; k++) {
+                        skylines[k] = maxHeight + boxH;
+                    }
+                    break;
+                }
             }
         }    
     }
 
-    public static void updateSkylines(ArrayList<MyBox> skylines){
-        int size = skylines.size();
-        MyBox last1 = skylines.get(size-2);
-        MyBox last2 = skylines.get(size-1); 
-        boolean rm1 = false,rm2 = false;
-        for(int i=0 ; i< size -2 ;i++){
-            MyBox cursky = skylines.get(i);
-            if(cursky.L == last2.L && !rm2){
-                if(cursky.H > last2.H){
-                    skylines.remove(last2);
-                    rm2 = true;
-                }
-                else{
-                    skylines.remove(cursky);
-                    break;
-                }
-            }
-            if(cursky.H == last1.H && !rm1){
-                if(cursky.H < last1.H){
-                    skylines.remove(last1);
-                    rm1 = true;
-                }
-                else{
-                    skylines.remove(cursky);
-                    break;
-                }
-            }
-            else if(cursky.L < last1.L && cursky.L > last2.L && cursky.H < last2.H){
-                skylines.add(new MyBox(last2.L, cursky.H));
-                skylines.remove(cursky);
-                skylines.remove(last2);
-                break;
-            }
-        }
-    }
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Choose Box sixe file 1-3");
@@ -75,7 +48,6 @@ public class Lab07_Skyline {
         System.out.println("Enter Container length and height");
         double length = sc.nextDouble();
         double height = sc.nextDouble();
-        ArrayList<MyBox> skylines = new ArrayList<>();
         SkylineSolve(data, used,length,height);
         if(used.size() != data.size()){
             System.out.println("not used box");
