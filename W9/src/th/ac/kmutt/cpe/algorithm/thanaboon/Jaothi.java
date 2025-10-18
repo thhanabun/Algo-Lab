@@ -5,18 +5,20 @@ import java.util.Scanner;
 
 public class Jaothi {
     
-    public static int solve(ArrayList<Brand> arr,int T,int n){
-        if(n < 1){
-            return 0;
+    public static int solve(ArrayList<Brand> arr,int T,int n,int [][] dp){
+        if(n < 0){
+            return  0;
         }
-        int nextT = T-arr.get(n-1).t;
-        if(T == 0){
-            return 0;
+        if(dp[T][n] < 0){
+            if(T < arr.get(n).t){
+                dp[T][n] = solve(arr, T, n-1, dp);
+            }
+            else{
+                dp[T][n] = Math.max(solve(arr, T - arr.get(n).t , n-1,dp) + arr.get(n).v, solve(arr, T, n-1,dp));
+
+            }
         }
-        if(nextT < 0){
-            return solve(arr, T, n-1);
-        }
-        return Math.max(solve(arr, nextT , n-1) + arr.get(n-1).v, solve(arr, T, n-1));
+        return dp[T][n];
     }
     
     public static void main(String[] args) {
@@ -30,7 +32,13 @@ public class Jaothi {
             Brand b = new Brand(t, v);
             arr.add(b);
         }
-        int ans = solve(arr,T,n); 
+        int [][] dp = new int[T+1][n];
+        for (int i = 0; i < dp.length; i++) {
+            for (int j = 0; j < dp[0].length; j++) {
+                dp[i][j] = -1;
+            }
+        }
+        int ans = solve(arr,T,n-1,dp); 
         System.out.println(ans);
         sc.close();
     }
