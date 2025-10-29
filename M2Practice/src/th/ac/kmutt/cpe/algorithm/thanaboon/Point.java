@@ -1,10 +1,10 @@
 package th.ac.kmutt.cpe.algorithm.thanaboon;
 
 public class Point implements Comparable<Point>{
-    int x;
-    int y;
+    double x;
+    double y;
 
-    public Point(int x,int y){
+    public Point(double x,double y){
         this.x = x;
         this.y = y;
     }
