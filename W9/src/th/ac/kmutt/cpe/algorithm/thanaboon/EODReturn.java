@@ -1,5 +1,7 @@
 package th.ac.kmutt.cpe.algorithm.thanaboon;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class EODReturn {
@@ -24,6 +26,7 @@ public class EODReturn {
             arr[i] = sc.nextInt();
         }
         System.out.println(solve(arr,dp,0));
+        System.out.println(Arrays.toString(dp));
         sc.close();
     }
 }

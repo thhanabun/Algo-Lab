@@ -3,6 +3,7 @@ package th.ac.kmutt.cpe.algorithm.thanaboon;
 import java.util.Scanner;
 
 public class Lottery {
+    
     public static LotteryAns horsePool(String Pattern,String txt){
         ShiftTable table = shiftTable(Pattern);
         int PatternL = Pattern.length();

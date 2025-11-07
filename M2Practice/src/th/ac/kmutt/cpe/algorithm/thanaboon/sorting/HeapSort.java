@@ -1,22 +1,11 @@
 package th.ac.kmutt.cpe.algorithm.thanaboon.sorting;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class HeapSort<T extends Comparable<T>> implements SortStrategy<T> {
 
     public void sort(ArrayList<T> list) {
-        int n = list.size();
-        for(int i = n ;i > 0 ; i--){
-            heapify(list,i);
-            if(i == n){
-                for (int j = 0; j < list.size(); j++) {
-                    System.out.printf("%d ",list.get(j));
-                }
-            }
-            Collections.swap(list, 0    , i-1);
-        }
-        System.out.println();
+
     }
 
     public void heapify(ArrayList<T> list,int n){
